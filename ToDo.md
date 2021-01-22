@@ -1,8 +1,8 @@
 1. Extract data from pdf
     - Confert pdf to image (v)
     - Get text from image using Tesseract-ocr (v)
-    - Structure the data in JSON format or CSV
     - Determine if it is an invoice using ml
+    - Process the text with ml to see if it is an invoice
     - Extract total amount, inv number and data
 2. Generate invoices of 10 different types
     - Get 10 types of invoice templates of google
