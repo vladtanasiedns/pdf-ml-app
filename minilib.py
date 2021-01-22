@@ -1,27 +1,26 @@
 import cv2
 import pytesseract
+from pdf2image import convert_from_path
+import PyPDF2 as pdf
 
 
-def draw_box_on_chars(img, config=r''):
+def draw_box_on_chars(img):
     """ 
     This function draws boxes around the characters of the read and puts the character by the box 
     """
-    boxes = pytesseract.image_to_boxes(img, config)
-    imgH, imgW, imgX = img.shape
+    boxes = pytesseract.image_to_boxes(img)
+    imgH, imgW, imgC = img.shape
     for b in boxes.splitlines():
         b = b.split(" ")
-        print(b)
         x, y, w, h = int(b[1]), int(b[2]), int(b[3]), int(b[4])
         cv2.rectangle(img, (x, imgH - y), (w, imgH - h), (0, 0, 255), 1)
-        cv2.putText(img, b[0], (x, imgH-y+25),
-                    cv2.FONT_HERSHEY_DUPLEX, 0.5, (0, 0, 255))
     cv2.imshow("Result", img)
     cv2.waitKey(0)
 
 
-def write_to_file(string):
+def write_string_to_file(string):
     """
-    Reads writes string to file
+    Writes string to file
     """
     with open("output.txt", "w") as f:
         f.write(string)
@@ -43,3 +42,14 @@ def draw_boxes_on_data(img, config=r''):
                             cv2.FONT_HERSHEY_DUPLEX, 0.5, (0, 0, 255))
     cv2.imshow("Result", img)
     cv2.waitKey(0)
+
+
+def convert_pdf_to_image(pdf_path, output_folder):
+    """
+    Converting a pdf file to jpeg image
+    and saving the file to root path or specified path
+    """
+    doc = pdf.PdfFileReader(pdf_path)
+    title = doc.getDocumentInfo()['/Title']
+    image = convert_from_path(
+        pdf_path, output_folder=output_folder, fmt="jpeg", output_file=f"{title}.jpg")
