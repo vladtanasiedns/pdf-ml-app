@@ -1,11 +1,12 @@
 #!/usr/bin python3
 import cv2
-import pytesseract
 import minilib as mi
+import sys
+import os
 
-img = cv2.imread('page-Sales invoice (Green design).jpg', cv2.IMREAD_GRAYSCALE)
+cwd = os.getcwd()+"/input/"
+output = os.getcwd()+"/output/"
 
-gray_eqlzd = cv2.equalizeHist(img)
-
-cv2.imshow("Result", img)
-cv2.waitKey(0)
+for file in os.listdir(cwd):
+    file_path = cwd + file
+    mi.convert_pdf_to_image(file_path, output, file)

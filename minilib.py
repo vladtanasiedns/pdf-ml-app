@@ -44,12 +44,10 @@ def draw_boxes_on_data(img, config=r''):
     cv2.waitKey(0)
 
 
-def convert_pdf_to_image(pdf_path, output_folder):
+def convert_pdf_to_image(pdf_path, output_folder, file_name):
     """
     Converting a pdf file to jpeg image
     and saving the file to root path or specified path
     """
-    doc = pdf.PdfFileReader(pdf_path)
-    title = doc.getDocumentInfo()['/Title']
     image = convert_from_path(
-        pdf_path, output_folder=output_folder, fmt="jpeg", output_file=f"{title}.jpg")
+        pdf_path, output_folder=output_folder, fmt="jpeg", output_file=f"{file_name}.jpg")
